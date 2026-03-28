@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gestión de Empleados — ✅ Buena Práctica</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<div class="header">
+  <h1>👥 Gestión de Empleados</h1>
+  <span class="badge buena">✅ Buena Práctica — Patrones de Diseño</span>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('registrar')">➕ Registrar</button>
+  <button class="tab-btn" onclick="showTab('empleados')">📋 Empleados</button>
+  <button class="tab-btn" onclick="showTab('salario')">💰 Salario</button>
+  <button class="tab-btn" onclick="showTab('vacaciones')">🏖️ Vacaciones</button>
+  <button class="tab-btn" onclick="showTab('reporte')">📊 Reporte</button>
+  <button class="tab-btn" onclick="showTab('notificaciones')">🔔 Notificaciones</button>
+</div>
+
+<div class="main">
+
+  <!-- TAB: REGISTRAR -->
+  <div id="tab-registrar" class="tab-content active">
+    <div class="card">
+      <h2>➕ Registrar Nuevo Empleado</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre completo</label>
+          <input type="text" id="reg-nombre" placeholder="Ej: Juan Pérez"/>
+        </div>
+        <div class="form-group">
+          <label>Tipo de empleado</label>
+          <select id="reg-tipo" onchange="toggleHoras()">
+            <option value="tiempo_completo">Tiempo Completo</option>
+            <option value="tiempo_parcial">Tiempo Parcial</option>
+            <option value="contratista">Contratista</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Cargo</label>
+          <input type="text" id="reg-cargo" placeholder="Ej: Desarrollador"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label id="lbl-salario">Salario base mensual ($)</label>
+          <input type="number" id="reg-salario" placeholder="Ej: 3000" min="0" step="0.01"/>
+        </div>
+        <div class="form-group" id="grp-horas">
+          <label>Horas por semana</label>
+          <input type="number" id="reg-horas" placeholder="Ej: 20" min="1" max="40" value="40"/>
+        </div>
+        <div class="form-group">
+          <label>Fecha de ingreso</label>
+          <input type="date" id="reg-fecha"/>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="reg-email" placeholder="correo@empresa.com"/>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="registrarEmpleado()">💾 Guardar Empleado</button>
+    </div>
+  </div>
+
+  <!-- TAB: EMPLEADOS -->
+  <div id="tab-empleados" class="tab-content">
+    <div class="card">
+      <h2>📋 Lista de Empleados <button class="btn btn-outline btn-sm" style="margin-left:auto" onclick="cargarEmpleados()">🔄 Actualizar</button></h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Nombre</th><th>Tipo</th><th>Cargo</th><th>Salario Base</th><th>Horas/sem</th><th>Ingreso</th></tr></thead>
+          <tbody id="tabla-empleados"><tr><td colspan="7" class="loading"><span class="spinner"></span>Cargando...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: SALARIO -->
+  <div id="tab-salario" class="tab-content">
+    <div class="card">
+      <h2>💰 Calcular Salario</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Seleccionar empleado</label>
+          <select id="sal-empleado"><option value="">-- Cargando... --</option></select>
+        </div>
+        <div class="form-group" style="justify-content:flex-end">
+          <label>&nbsp;</label>
+          <button class="btn btn-primary" onclick="calcularSalario()">⚙️ Calcular</button>
+        </div>
+      </div>
+      <div id="resultado-salario"></div>
+    </div>
+  </div>
+
+  <!-- TAB: VACACIONES -->
+  <div id="tab-vacaciones" class="tab-content">
+    <div class="card">
+      <h2>🏖️ Solicitar Vacaciones</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Empleado</label>
+          <select id="vac-empleado"><option value="">-- Cargando... --</option></select>
+        </div>
+        <div class="form-group">
+          <label>Fecha de inicio</label>
+          <input type="date" id="vac-inicio"/>
+        </div>
+        <div class="form-group">
+          <label>Fecha de fin</label>
+          <input type="date" id="vac-fin"/>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="solicitarVacaciones()">📨 Solicitar</button>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h2>📅 Historial de Vacaciones <button class="btn btn-outline btn-sm" style="margin-left:auto" onclick="cargarVacaciones()">🔄 Actualizar</button></h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Empleado</th><th>Tipo</th><th>Inicio</th><th>Fin</th><th>Días</th><th>Estado</th><th>Acción</th></tr></thead>
+          <tbody id="tabla-vacaciones"><tr><td colspan="7" class="loading"><span class="spinner"></span>Cargando...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: REPORTE -->
+  <div id="tab-reporte" class="tab-content">
+    <div class="card">
+      <h2>📊 Reporte de Nómina <button class="btn btn-outline btn-sm" style="margin-left:auto" onclick="generarReporte()">🔄 Generar</button></h2>
+      <div class="stats" id="stats-reporte">
+        <div class="stat-card"><div class="value" id="st-total">—</div><div class="label">Total Empleados</div></div>
+        <div class="stat-card green"><div class="value" id="st-nomina">—</div><div class="label">Nómina Total</div></div>
+        <div class="stat-card orange"><div class="value" id="st-tc">—</div><div class="label">Tiempo Completo</div></div>
+        <div class="stat-card purple"><div class="value" id="st-tp">—</div><div class="label">Tiempo Parcial</div></div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Nombre</th><th>Tipo</th><th>Cargo</th><th>Fórmula aplicada</th><th>Salario Final</th><th>Vacaciones tomadas</th></tr></thead>
+          <tbody id="tabla-reporte"><tr><td colspan="6" class="empty"><span class="icon">📊</span>Haz clic en "Generar" para ver el reporte</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: NOTIFICACIONES -->
+  <div id="tab-notificaciones" class="tab-content">
+    <div class="card">
+      <h2>🔔 Notificaciones <button class="btn btn-outline btn-sm" style="margin-left:auto" onclick="cargarNotificaciones()">🔄 Actualizar</button></h2>
+      <div class="noti-list" id="noti-list">
+        <div class="loading"><span class="spinner"></span>Cargando...</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<div id="toast"></div>
+<script src="js/app.js"></script>
+<script>
+  // Configuración específica para la versión BUENA PRÁCTICA
+  const API_URL = 'backend/api/index.php';
+</script>
+</body>
+</html>

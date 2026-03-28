@@ -1,0 +1,5 @@
+[2026-03-21 15:48:18] EVENTO=empleado_registrado | {"empleado_id":7,"nombre":"Daniel","tipo":"tiempo_completo"}
+[2026-03-21 17:34:35] EVENTO=vacacion_solicitada | {"empleado_id":1,"nombre":"Ana García","fecha_inicio":"2026-03-21","fecha_fin":"2026-03-31"}
+[2026-03-21 17:34:42] EVENTO=vacacion_aprobada | {"empleado_id":"1","nombre":"Ana García"}
+[2026-03-21 17:34:45] EVENTO=vacacion_rechazada | {"empleado_id":"4","nombre":"Carlos Ruiz"}
+[2026-03-21 17:34:58] EVENTO=reporte_generado | {"tipo":"Nomina Completa"}

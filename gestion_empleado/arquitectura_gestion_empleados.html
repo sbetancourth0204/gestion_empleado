@@ -1,0 +1,182 @@
+
+<style>
+*{box-sizing:border-box;}
+.sec{font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.06em;padding:18px 0 8px;margin:0;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.card{border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;}
+.card-hdr{padding:8px 14px;font-size:12px;font-weight:500;display:flex;align-items:center;gap:6px;}
+.hdr-bad{background:var(--color-background-danger);color:var(--color-text-danger);}
+.hdr-ok{background:var(--color-background-success);color:var(--color-text-success);}
+.card-body{padding:12px 14px;font-family:var(--font-mono);font-size:10.5px;line-height:1.95;color:var(--color-text-primary);}
+.fn{color:var(--color-text-info);font-weight:500;}
+.fb{color:var(--color-text-danger);}
+.bdg{display:inline-block;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:500;margin-left:3px;font-family:var(--font-sans);vertical-align:middle;}
+.b-sin{background:#EEEDFE;color:#3C3489;} .b-fac{background:#FAECE7;color:#712B13;}
+.b-str{background:#FAEEDA;color:#633806;} .b-obs{background:#EAF3DE;color:#27500A;}
+.b-rep{background:#E6F1FB;color:#0C447C;} .b-bad{background:#FCEBEB;color:#791F1F;}
+@media(prefers-color-scheme:dark){
+  .b-sin{background:#26215C;color:#CECBF6;} .b-fac{background:#4A1B0C;color:#F5C4B3;}
+  .b-str{background:#412402;color:#FAC775;} .b-obs{background:#173404;color:#C0DD97;}
+  .b-rep{background:#042C53;color:#B5D4F4;} .b-bad{background:#501313;color:#F7C1C1;}
+}
+.warn-box{margin-top:6px;padding:6px 9px;background:var(--color-background-danger);border-radius:6px;font-family:var(--font-sans);font-size:10px;color:var(--color-text-danger);line-height:1.75;}
+</style>
+
+<div class="sec">Estructura de carpetas</div>
+
+<div class="two-col">
+  <div class="card">
+    <div class="card-hdr hdr-bad">❌ Mala práctica — código espagueti</div>
+    <div class="card-body">
+      <span class="fn">📁 mala_practica/</span><br>
+      ├── 📄 index.html<br>
+      ├── <span class="fn">📁 css/</span> style.css<br>
+      ├── <span class="fn">📁 js/</span> app.js<br>
+      └── <span class="fn">📁 backend/</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;└── ⚠️ <span class="fb">todo.php</span><span class="bdg b-bad">ARCHIVO DIOS</span>
+      <div class="warn-box">
+        ✗ 300+ líneas en 1 solo archivo<br>
+        ✗ Variables: $c $r $a $n $d<br>
+        ✗ SQL injection en todas las queries<br>
+        ✗ Lógica de salario duplicada 3 veces<br>
+        ✗ N+1 queries en el reporte<br>
+        ✗ Sin validación de datos de entrada
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hdr hdr-ok">✅ Buena práctica — patrones de diseño</div>
+    <div class="card-body">
+      <span class="fn">📁 buena_practica/</span><br>
+      ├── 📄 index.html<br>
+      ├── <span class="fn">📁 css/</span> style.css<br>
+      ├── <span class="fn">📁 js/</span> app.js<br>
+      └── <span class="fn">📁 backend/</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;├── <span class="fn">📁 config/</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;└── Database.php<span class="bdg b-sin">Singleton</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;├── <span class="fn">📁 models/</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;└── Empleado.php<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;├── <span class="fn">📁 factories/</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;└── EmpleadoFactory.php<span class="bdg b-fac">Factory</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;├── <span class="fn">📁 strategies/</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;├── SalarioStrategy.php<span class="bdg b-str">Strategy</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;├── SalarioTiempoCompleto.php<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;├── SalarioTiempoParcial.php<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;└── SalarioContratista.php<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;├── <span class="fn">📁 observers/</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;├── Observable.php<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;├── NotificacionObserver.php<span class="bdg b-obs">Observer</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;└── LogObserver.php<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;├── <span class="fn">📁 repositories/</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;└── EmpleadoRepository.php<span class="bdg b-rep">Repository</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;└── <span class="fn">📁 api/</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── index.php
+    </div>
+  </div>
+</div>
+
+<div class="sec">Diagrama de arquitectura — buena práctica</div>
+
+<svg width="100%" viewBox="0 0 680 440">
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- Row 1: Browser -->
+<g class="node c-gray" onclick="sendPrompt('¿Cómo se comunica el navegador con el backend en este proyecto?')">
+  <rect x="240" y="16" width="200" height="44" rx="8" stroke-width="0.5"/>
+  <text class="th" x="340" y="33" text-anchor="middle" dominant-baseline="central">Navegador</text>
+  <text class="ts" x="340" y="51" text-anchor="middle" dominant-baseline="central">HTML · CSS · JavaScript</text>
+</g>
+
+<!-- Label on arrow 1→2 -->
+<line x1="340" y1="60" x2="340" y2="94" class="arr" marker-end="url(#arrow)"/>
+<text class="ts" x="356" y="80" dominant-baseline="central">HTTP Fetch API</text>
+
+<!-- Row 2: API -->
+<g class="node c-blue" onclick="sendPrompt('¿Qué hace api/index.php y por qué es el punto de entrada?')">
+  <rect x="185" y="96" width="310" height="44" rx="8" stroke-width="0.5"/>
+  <text class="th" x="340" y="113" text-anchor="middle" dominant-baseline="central">api / index.php</text>
+  <text class="ts" x="340" y="131" text-anchor="middle" dominant-baseline="central">punto de entrada · enruta acciones con switch</text>
+</g>
+
+<!-- Arrow 2→3 -->
+<line x1="340" y1="140" x2="340" y2="174" class="arr" marker-end="url(#arrow)"/>
+
+<!-- Row 3: Repository (hub) -->
+<g class="node c-purple" onclick="sendPrompt('¿Qué hace EmpleadoRepository y qué patrones de diseño orquesta?')">
+  <rect x="125" y="176" width="430" height="56" rx="10" stroke-width="0.5"/>
+  <text class="th" x="340" y="196" text-anchor="middle" dominant-baseline="central">EmpleadoRepository</text>
+  <text class="ts" x="340" y="214" text-anchor="middle" dominant-baseline="central">Orquesta Factory · Strategy · Singleton · Observer</text>
+</g>
+
+<!-- Bus: stem -->
+<line x1="340" y1="232" x2="340" y2="250" stroke="var(--color-border-secondary)" stroke-width="1.5" fill="none"/>
+<!-- Bus: horizontal bar -->
+<line x1="95" y1="250" x2="545" y2="250" stroke="var(--color-border-secondary)" stroke-width="1.5" fill="none"/>
+<!-- Bus: 4 drops with arrows -->
+<line x1="95"  y1="250" x2="95"  y2="264" class="arr" marker-end="url(#arrow)"/>
+<line x1="245" y1="250" x2="245" y2="264" class="arr" marker-end="url(#arrow)"/>
+<line x1="395" y1="250" x2="395" y2="264" class="arr" marker-end="url(#arrow)"/>
+<line x1="545" y1="250" x2="545" y2="264" class="arr" marker-end="url(#arrow)"/>
+
+<!-- Row 4: Patterns (y=266, h=56) -->
+<!-- Factory (coral) -->
+<g class="node c-coral" onclick="sendPrompt('¿Cómo funciona el patrón Factory con EmpleadoFactory.php?')">
+  <rect x="25" y="266" width="140" height="56" rx="8" stroke-width="0.5"/>
+  <text class="th" x="95" y="285" text-anchor="middle" dominant-baseline="central">Factory</text>
+  <text class="ts" x="95" y="303" text-anchor="middle" dominant-baseline="central">crea empleados</text>
+</g>
+
+<!-- Strategy (amber) -->
+<g class="node c-amber" onclick="sendPrompt('¿Cómo funciona el patrón Strategy para calcular el salario según el tipo de empleado?')">
+  <rect x="175" y="266" width="140" height="56" rx="8" stroke-width="0.5"/>
+  <text class="th" x="245" y="285" text-anchor="middle" dominant-baseline="central">Strategy</text>
+  <text class="ts" x="245" y="303" text-anchor="middle" dominant-baseline="central">calcula salario</text>
+</g>
+
+<!-- Singleton (teal) -->
+<g class="node c-teal" onclick="sendPrompt('¿Cómo funciona el patrón Singleton en Database.php?')">
+  <rect x="325" y="266" width="140" height="56" rx="8" stroke-width="0.5"/>
+  <text class="th" x="395" y="285" text-anchor="middle" dominant-baseline="central">Singleton</text>
+  <text class="ts" x="395" y="303" text-anchor="middle" dominant-baseline="central">única conexión</text>
+</g>
+
+<!-- Observer (green) -->
+<g class="node c-green" onclick="sendPrompt('¿Cómo funciona el patrón Observer con los observadores de notificaciones?')">
+  <rect x="475" y="266" width="140" height="56" rx="8" stroke-width="0.5"/>
+  <text class="th" x="545" y="285" text-anchor="middle" dominant-baseline="central">Observer</text>
+  <text class="ts" x="545" y="303" text-anchor="middle" dominant-baseline="central">notifica eventos</text>
+</g>
+
+<!-- Arrows row 4→5 -->
+<line x1="95"  y1="322" x2="95"  y2="354" class="arr" marker-end="url(#arrow)"/>
+<line x1="245" y1="322" x2="245" y2="354" class="arr" marker-end="url(#arrow)"/>
+<line x1="395" y1="322" x2="395" y2="354" class="arr" marker-end="url(#arrow)"/>
+<line x1="545" y1="322" x2="545" y2="354" class="arr" marker-end="url(#arrow)"/>
+
+<!-- Row 5: Implementations (y=356, h=36) -->
+<g class="node c-coral" onclick="sendPrompt('¿Qué información guarda el modelo Empleado.php?')">
+  <rect x="25" y="356" width="140" height="36" rx="6" stroke-width="0.5"/>
+  <text class="ts" x="95" y="374" text-anchor="middle" dominant-baseline="central">Empleado.php</text>
+</g>
+
+<g class="node c-amber" onclick="sendPrompt('¿Cuáles son las 3 estrategias de salario: tiempo completo, parcial y contratista?')">
+  <rect x="175" y="356" width="140" height="36" rx="6" stroke-width="0.5"/>
+  <text class="ts" x="245" y="374" text-anchor="middle" dominant-baseline="central">TC · TP · CT</text>
+</g>
+
+<g class="node c-teal" onclick="sendPrompt('¿Cómo se conecta la aplicación a MySQL usando el Singleton?')">
+  <rect x="325" y="356" width="140" height="36" rx="6" stroke-width="0.5"/>
+  <text class="ts" x="395" y="374" text-anchor="middle" dominant-baseline="central">MySQL</text>
+</g>
+
+<g class="node c-green" onclick="sendPrompt('¿Qué hacen NotificacionObserver y LogObserver cuando reciben un evento?')">
+  <rect x="475" y="356" width="140" height="36" rx="6" stroke-width="0.5"/>
+  <text class="ts" x="545" y="374" text-anchor="middle" dominant-baseline="central">BD notif. · Log</text>
+</g>
+
+</svg>
