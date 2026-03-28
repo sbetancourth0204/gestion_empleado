@@ -69,8 +69,8 @@ C:\xampp\htdocs\          (Windows)
 ### Paso 3 — Abrir las aplicaciones
 | Versión | URL |
 |---------|-----|
-| ❌ Mala Práctica | http://localhost/gestion_empleados/mala_practica/ |
-| ✅ Buena Práctica | http://localhost/gestion_empleados/buena_practica/ |
+| ❌ Mala Práctica | http://localhost/gestion_empleado/mala_practica/ |
+| ✅ Buena Práctica | http://localhost/gestion_empleado/buena_practica/ |
 
 ---
 
